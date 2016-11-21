@@ -1,0 +1,5 @@
+snli dataset
+http://nlp.stanford.edu/projects/snli/snli_1.0.zip
+
+word2vec pretrained on google news with 300 dimensions
+https://drive.google.com/file/d/0B7XkCwpI5KDYNlNUTTlSS21pQmM/edit?usp=sharing

@@ -1,0 +1,12 @@
+./snli
+./snli/README.txt
+./snli/snli_1.0_dev.jsonl
+./snli/snli_1.0_dev.txt
+./snli/snli_1.0_test.jsonl
+./snli/snli_1.0_test.txt
+./snli/snli_1.0_train.jsonl
+./snli/snli_1.0_train.txt
+./w2vec
+./w2vec/.DS_Store
+./w2vec/GoogleNews-vectors-negative300.bin
+./w2vec/GoogleNews-vectors-negative300.bin.gz
