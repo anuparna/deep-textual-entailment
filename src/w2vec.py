@@ -4,17 +4,15 @@ import numpy as np
 #depends on pip packages: pattern, gensim, numpy
 class W2Vec:
 	def __init__(self):
-		print 'loading'
+		print 'Loading word2vec model'
 		self.model = Word2Vec.load_word2vec_format('../data/w2vec/GoogleNews-vectors-negative300.bin', binary=True)
-		print 'loaded'
+		print 'Loaded Word2Vec model'
 
 	def convertWord(self, word, unk='random'):
 		return self.model[word]
 
 	def convertSentence(self, sentence):
-		wordsreps = []
-		for w in sentence:
-			wordsreps.append(self.convertWord(w))
+		return self.model[sentence]
 
-# w = W2Vec()
-# print w.convertWord('the')
+	def unkWordRep(self):
+		return np.random.rand(300)
