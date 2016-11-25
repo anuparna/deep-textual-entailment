@@ -5,15 +5,15 @@ import string
 from sklearn.preprocessing import LabelBinarizer
 
 class SNLI:
-	def __init__(self):
+	def __init__(self, w2vec):
 		self.data = {}
 		self.data['X'] = {}
 		self.data['y'] = {}
 		self.data['X']['train'],self.data['y']['train'] = self.loadData('train')
 		self.data['X']['test'],self.data['y']['test'] = self.loadData('test')
 		self.data['X']['dev'],self.data['y']['dev'] = self.loadData('dev')
-		self.w2vec = W2Vec()
-
+		self.w2vec = w2vec
+		
 		self.le = LabelBinarizer()
 		self.le.fit(['entailment','neutral','contradiction'])
 
@@ -43,6 +43,8 @@ class SNLI:
 					raise NotImplementedError
 				y.append(parts[0])
 				X.append([self.preprocess(parts[5]),self.preprocess(parts[6])])
+				# if len(X)>500:
+				# 	break
 		return X, y
 
 	def preprocess(self, sentence, removePunct = True, lowerCase = False):
