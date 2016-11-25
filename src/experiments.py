@@ -1,7 +1,9 @@
-from data_snli import SNLI
-from w2vec import W2Vec
-
-snli_data = SNLI(W2Vec())
-
-from concat_lstm import ConcatLstm
-c = ConcatLstm(snli_data,3)
+import data_snli
+import w2vec
+w2vec = w2vec.W2Vec()
+snli = data_snli.SNLI(w2vec)
+import concat_lstm
+c = concat_lstm.ConcatLstm(snli,3)
+c.build_model()
+c.train()
+c.test()

@@ -11,8 +11,6 @@ class ConcatLstm:
 	def __init__(self, data, num_targets):
 		#add other variables here and change models
 		self.num_targets = num_targets
-		# (self.premise_train, self.hypothesis_train), self.y_train = data.getData('train')
-		# (self.premise_test, self.hypothesis_test), self.y_test = data.getData('test')
 		self.data = data
 		self.maxLengths = data.getMaxLengths()
 
@@ -33,14 +31,6 @@ class ConcatLstm:
 		self.model.compile(optimizer='rmsprop',
 		              loss='categorical_crossentropy',
 		              metrics=['accuracy'])
-
-	# def sequence_padding(self):
-
-	# 	self.premise_train = sequence.pad_sequences(self.premise_train, dtype='float32',padding='post',maxlen=self.maxLengths[0])
-	# 	self.hypothesis_train = sequence.pad_sequences(self.hypothesis_train,dtype='float32',padding='post',maxlen=self.maxLengths[1])
-
-	# 	self.premise_test= sequence.pad_sequences(self.premise_test, dtype='float32',padding='post',maxlen=self.maxLengths[0])
-	# 	self.hypothesis_test = sequence.pad_sequences(self.hypothesis_test,dtype='float32',padding='post',maxlen=self.maxLengths[1])
 
 	def train(self):
 		self.model.fit_generator(self.batch_generator('train',100), 500000, 10)
@@ -63,13 +53,5 @@ class ConcatLstm:
 		maxlenp = self.maxLengths[0]
 		maxlenh = self.maxLengths[1]
 		prem,hyp = data
-		# print prem.shape, hyp.shape
 		paddedprem, paddedhyp = sequence.pad_sequences(prem, dtype='float32',padding='post',maxlen=maxlenp),sequence.pad_sequences(hyp, dtype='float32',padding='post',maxlen=maxlenh)
-		# print paddedprem.shape, paddedhyp.shape
-		# print len(paddedprem), len(paddedhyp)
 		return [paddedprem, paddedhyp]
-
-# c = ConcatLstm(SNLI(W2Vec()),3)
-# c.build_model()
-# c.train()
-# c.test()

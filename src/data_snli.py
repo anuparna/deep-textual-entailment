@@ -42,8 +42,6 @@ class SNLI:
 					raise NotImplementedError
 				y.append(parts[0])
 				X.append([self.preprocess(parts[5]),self.preprocess(parts[6])])
-				if len(X)>500:
-					break
 		return X, y
 
 	def preprocess(self, sentence, removePunct = True, lowerCase = False):
@@ -85,7 +83,7 @@ class SNLI:
 					toappend = self.w2vec.unkWordRep()
 				hyp.append(toappend)
 			hypothesis.append(np.asarray(hyp))
-		
+
 		rval = np.asarray(premise), np.asarray(hypothesis)
 		return rval
 
