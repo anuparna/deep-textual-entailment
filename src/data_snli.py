@@ -12,9 +12,8 @@ class SNLI:
 		self.data['X']['train'],self.data['y']['train'] = self.loadData('train')
 		self.data['X']['test'],self.data['y']['test'] = self.loadData('test')
 		self.data['X']['dev'],self.data['y']['dev'] = self.loadData('dev')
-		self.w2vec = w2vec
-		
 		self.le = LabelBinarizer()
+		self.w2vec = w2vec
 		self.le.fit(['entailment','neutral','contradiction'])
 
 
@@ -43,8 +42,8 @@ class SNLI:
 					raise NotImplementedError
 				y.append(parts[0])
 				X.append([self.preprocess(parts[5]),self.preprocess(parts[6])])
-				# if len(X)>500:
-				# 	break
+				if len(X)>500:
+					break
 		return X, y
 
 	def preprocess(self, sentence, removePunct = True, lowerCase = False):
@@ -62,32 +61,41 @@ class SNLI:
 					maxLen[1] = len(sent[1])
 		return maxLen
 
-	def getX(self, dataset):
+	def getX(self, dataset, start_index, end_index):
 		premise = []
 		hypothesis = []
-		for sentences in self.data['X'][dataset]:
+		
+		sentences = self.data['X'][dataset][start_index:end_index]
+		
+		for pair in sentences:
 			prem = []
-			for w in sentences[0]:
+			for w in pair[0]:
 				try:
 					toappend = self.w2vec.convertWord(w)
 				except KeyError:
 					toappend = self.w2vec.unkWordRep()
 				prem.append(toappend)
 			premise.append(np.asarray(prem))
-
+		
 			hyp = []
-			for w in sentences[1]:
+			for w in pair[1]:
 				try:
 					toappend = self.w2vec.convertWord(w)
 				except KeyError:
 					toappend = self.w2vec.unkWordRep()
 				hyp.append(toappend)
 			hypothesis.append(np.asarray(hyp))
-		return np.asarray(premise), np.asarray(hypothesis)
+		
+		rval = np.asarray(premise), np.asarray(hypothesis)
+		return rval
 
-	def getY(self, dataset):
+	def getY(self, dataset, start_index=None, end_index=None):
 		#converts label to 0,1,2
-		return self.le.transform(self.data['y'][dataset])
+		if start_index is not None and end_index is not None:
+			return self.le.transform(self.data['y'][dataset][start_index:end_index])
+		else:
+			return self.le.transform(self.data['y'][dataset])
 
 	def getData(self, dataset):
 		return self.getX(dataset), self.getY(dataset)
+
