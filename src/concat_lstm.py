@@ -6,7 +6,6 @@ from data_snli import SNLI
 from w2vec import W2Vec
 from keras.preprocessing import sequence
 
-import random
 class ConcatLstm:
 	def __init__(self, data, num_targets, lstm_size=20, dense_size=32, dense_activation='relu', batch_size = 100, num_epochs=10):
 		#add other variables here and change models
@@ -23,6 +22,8 @@ class ConcatLstm:
 		# since we are ignoring samples at the end, if not enough to form a full batch. see logic in batch_generator
 		self.train_size = (len(self.data.data['X']['train'])/(self.batch_size))*self.batch_size
 		self.test_size = (len(self.data.data['X']['test'])/(self.batch_size))*self.batch_size
+	
+
 	def build_model(self):
 		premise_input = Input(shape=(self.maxLengths[0],300), dtype='float32', name='premise')
 		premise_encoded = LSTM(self.lstm_size)(premise_input)
@@ -50,11 +51,11 @@ class ConcatLstm:
 
 	def batch_generator(self, dataset):
 		while True:
-			y = self.data.getY('train')
+			y = self.data.getY(dataset)
 			for i in range(len(y)):
 				start_index = (i*self.batch_size)
 				end_index = ((i+1)*self.batch_size)
-				if end_index>len(y):
+				if end_index>=len(y):
 					break
 				yield (self.sequence_padding(self.data.getX(dataset, start_index, end_index)), self.data.getY(dataset,start_index,end_index))
 
