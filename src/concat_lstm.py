@@ -19,10 +19,20 @@ class ConcatLstm:
 		self.batch_size = batch_size
 		self.num_epochs = num_epochs
 
+
 		# since we are ignoring samples at the end, if not enough to form a full batch. see logic in batch_generator
 		self.train_size = (len(self.data.data['X']['train'])/(self.batch_size))*self.batch_size
 		self.test_size = (len(self.data.data['X']['test'])/(self.batch_size))*self.batch_size
 	
+	def print_params(self):
+		print 'lstm_size:',self.lstm_size
+		print 'dense_size:',self.dense_size
+		print 'dense_activation:', self.dense_activation
+		print 'batch_size:',self.batch_size
+		print 'num_epochs:',self.num_epochs
+
+		print 'train_size:',self.train_size
+		print 'test_size:',self.test_size
 
 	def build_model(self):
 		premise_input = Input(shape=(self.maxLengths[0],300), dtype='float32', name='premise')
