@@ -50,14 +50,17 @@ class NeuralNet:
 	def sequence_padding(self, data):
 		pass
 
-	def batch_generator(self, dataset):
+	def batch_generator(self, dataset):	
 		y = self.data.getY(dataset)
 		while True:
 			i=0
+			start_index = 0
+			end_index = 0
 			while end_index<len(y):
 				start_index = (i*self.batch_size)
 				end_index = ((i+1)*self.batch_size)
 				if end_index>len(y):
 					end_index = len(y)
+				i+=1
 				yield (self.sequence_padding(self.data.getX(dataset, start_index, end_index)), self.data.getY(dataset,start_index,end_index))
 
