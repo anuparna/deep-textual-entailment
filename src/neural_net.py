@@ -1,5 +1,6 @@
 import numpy as np
 from abc import ABCMeta, abstractmethod
+from keras.models import load_model
 
 class NeuralNet:
 	__metaclass__ = ABCMeta
@@ -41,6 +42,9 @@ class NeuralNet:
 	@abstractmethod
 	def build_model(self):
 		pass
+
+	def load_model(self,path):
+		self.model = load_model(path)
 
 	@abstractmethod
 	def sequence_padding(self, data):
