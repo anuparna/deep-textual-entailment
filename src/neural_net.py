@@ -16,9 +16,9 @@ class NeuralNet:
 		self.dense_size = dense_size
 		self.batch_size = batch_size
 		self.num_epochs = num_epochs
-		# since we are ignoring samples at the end, if not enough to form a full batch. see logic in batch_generator
-		self.train_size = (len(self.data.data['X']['train'])/(self.batch_size))*self.batch_size
-		self.test_size = (len(self.data.data['X']['test'])/(self.batch_size))*self.batch_size
+
+		self.train_size = len(self.data.data['X']['train'])
+		self.test_size = len(self.data.data['X']['test'])
 
 		self.print_params()
 	
@@ -56,7 +56,7 @@ class NeuralNet:
 			for i in range(len(y)):
 				start_index = (i*self.batch_size)
 				end_index = ((i+1)*self.batch_size)
-				if end_index>=len(y):
-					break
+				if end_index>len(y):
+					end_index = len(y)
 				yield (self.sequence_padding(self.data.getX(dataset, start_index, end_index)), self.data.getY(dataset,start_index,end_index))
 
