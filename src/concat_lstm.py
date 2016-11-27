@@ -25,7 +25,7 @@ class ConcatLstm(NeuralNet):
 		self.model.compile(optimizer='rmsprop',
 		              loss='categorical_crossentropy',
 		       	       metrics=['accuracy'])
-
+		
 
 	def sequence_padding(self,data):
 		maxlenp = self.maxLengths[0]
