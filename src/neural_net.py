@@ -1,6 +1,7 @@
 import numpy as np
 from abc import ABCMeta, abstractmethod
 from keras.models import load_model
+import math
 
 class NeuralNet:
 	__metaclass__ = ABCMeta
@@ -53,14 +54,10 @@ class NeuralNet:
 	def batch_generator(self, dataset):	
 		y = self.data.getY(dataset)
 		while True:
-			i=0
-			start_index = 0
-			end_index = 0
-			while end_index<len(y):
+			for i in range(math.ceil(len(y)/(float)self.batch_size)):
 				start_index = (i*self.batch_size)
 				end_index = ((i+1)*self.batch_size)
 				if end_index>len(y):
 					end_index = len(y)
-				i+=1
 				yield (self.sequence_padding(self.data.getX(dataset, start_index, end_index)), self.data.getY(dataset,start_index,end_index))
 
