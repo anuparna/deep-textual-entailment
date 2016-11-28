@@ -54,7 +54,7 @@ class NeuralNet:
 	def batch_generator(self, dataset):	
 		y = self.data.getY(dataset)
 		while True:
-			for i in range(math.ceil(len(y)/(float)self.batch_size)):
+			for i in range(int(math.ceil(len(y)/float(self.batch_size)))):
 				start_index = (i*self.batch_size)
 				end_index = ((i+1)*self.batch_size)
 				if end_index>len(y):
