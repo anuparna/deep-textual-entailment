@@ -27,7 +27,7 @@ class SharedEncoding(NeuralNet):
 		x = Dense(self.dense_size,activation=self.dense_activation)(merged_vector)
 		x = Dense(self.dense_size,activation=self.dense_activation)(x)
 		predictions = Dense(self.num_targets,activation='softmax')(x)
-
+		
 		self.model = Model(input=[premise_input, hypothesis_input], output=predictions)
 		self.model.compile(optimizer='rmsprop',
 		              loss='categorical_crossentropy',
