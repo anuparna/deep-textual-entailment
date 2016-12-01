@@ -6,7 +6,7 @@ from data_snli import SNLI
 from keras.preprocessing import sequence
 
 class SharedEncoding(NeuralNet):
-	def __init__(self, data, num_targets, lstm_size=20, dense_size=32, dense_activation='relu', batch_size = 100, num_epochs=10):
+	def __init__(self, data, num_targets, lstm_size=20, dense_size=32, dense_activation='relu', batch_size = 10000, num_epochs=50):
 		super(SharedEncoding,self).__init__(data=data, num_targets=num_targets, lstm_size=lstm_size, dense_size=dense_size, dense_activation=dense_activation, batch_size=batch_size, num_epochs=num_epochs)
 		self.maxLength = max(self.maxLengths)
 
@@ -18,7 +18,7 @@ class SharedEncoding(NeuralNet):
 		premise_input = Input(shape=(self.maxLength, 300), dtype='float32', name='premise')
 		hypothesis_input = Input(shape=(self.maxLength, 300), dtype='float32', name='hypothesis')
 		
-		shared_lstm = LSTM(self.lstm_size)
+		shared_lstm = LSTM(self.lstm_size,stateful=True)
 		
 		encoded_prem= shared_lstm(premise_input)
 		encoded_hyp = shared_lstm(hypothesis_input)
