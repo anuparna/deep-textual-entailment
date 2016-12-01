@@ -6,10 +6,9 @@ import math
 class NeuralNet:
 	__metaclass__ = ABCMeta
 
-	def __init__(self, data, num_targets, lstm_size=20, dense_size=32, dense_activation='relu',batch_size=1000, num_epochs=10):
+	def __init__(self, data, num_targets, lstm_size=20, dense_size=32, dense_activation='relu',batch_size=10000, num_epochs=50):
 		self.data = data
 		self.num_targets = num_targets
-		self.data = data
 		self.maxLengths = data.getMaxLengths()
 
 		self.dense_activation = dense_activation
@@ -47,6 +46,13 @@ class NeuralNet:
 	def load_model(self,path):
 		self.model = load_model(path)
 
+	def retrain(self, num_epochs):
+		self.model.fit_generator(self.batch_generator('train'), self.train_size, num_epochs)
+
+	def load_retrain(self, path, num_epochs):
+		self.load_model(path)
+		self.retrain(num_epochs)
+		
 	@abstractmethod
 	def sequence_padding(self, data):
 		pass
