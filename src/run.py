@@ -20,16 +20,16 @@ if len(sys.argv) == 8:
 
 	if sys.argv[7]=='ConcatLstm':
 		import concat_lstm
-		c = concat_lstm.ConcatLstm(snli, 3, int(sys.argv[1]), int(sys.argv[2]), dense_activation=sys.argv[3], batch_size=10000, num_epochs=int(sys.argv[4]))
+		c = concat_lstm.ConcatLstm(snli, 3, int(sys.argv[1]), int(sys.argv[2]), dense_activation=sys.argv[3], batch_size=5000, num_epochs=int(sys.argv[4]))
 	elif sys.argv[7]=='SharedEncoding':
 		import shared_encoding
-		c = shared_encoding.SharedEncoding(snli, 3, int(sys.argv[1]), int(sys.argv[2]), dense_activation=sys.argv[3], batch_size=10000, num_epochs=int(sys.argv[4]))
+		c = shared_encoding.SharedEncoding(snli, 3, int(sys.argv[1]), int(sys.argv[2]), dense_activation=sys.argv[3], batch_size=5000, num_epochs=int(sys.argv[4]))
 	elif sys.argv[7]=='SharedBidirectional':
 		import shared_encoding
-		c = shared_encoding.SharedBidirectional(snli, 3, int(sys.argv[1]), int(sys.argv[2]), dense_activation=sys.argv[3], batch_size=10000, num_epochs=int(sys.argv[4]))
+		c = shared_encoding.SharedBidirectional(snli, 3, int(sys.argv[1]), int(sys.argv[2]), dense_activation=sys.argv[3], batch_size=5000, num_epochs=int(sys.argv[4]))
 	elif sys.argv[7] == 'Attention':
 		import attention_w2vec
-		c = attention_w2vec.AttentiveLstm(snli, 3, int(sys.argv[1]), int(sys.argv[2]), dense_activation=sys.argv[3], batch_size=10000, num_epochs=int(sys.argv[4]))
+		c = attention_w2vec.AttentiveLstm(snli, 3, int(sys.argv[1]), int(sys.argv[2]), dense_activation=sys.argv[3], batch_size=5000, num_epochs=int(sys.argv[4]))
 
 	if sys.argv[6]=='no':
 		c.train()
